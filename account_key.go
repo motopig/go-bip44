@@ -1,12 +1,16 @@
 package bip44
 
 import (
+	"encoding/hex"
+	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcutil/hdkeychain"
 )
 
 type AccountKey struct {
-	extendedKey *hdkeychain.ExtendedKey
-	startPath   HDStartPath
+	extendedKey      *hdkeychain.ExtendedKey
+	startPath        HDStartPath
+	scriptPubKeyHash *btcutil.AddressPubKeyHash
+	scriptPubKeyStr  string
 }
 
 func NewAccountKeyFromXPubKey(value string) (*AccountKey, error) {
@@ -46,7 +50,8 @@ func (k *AccountKey) DeriveP2PKAddress(changeType ChangeType, index uint32, netw
 		return nil, err
 	}
 
-	a, err := addressK.Address(netParam)
+	k.scriptPubKeyHash, err = addressK.Address(netParam)
+	k.scriptPubKeyStr = hex.EncodeToString(k.scriptPubKeyHash.ScriptAddress())
 
 	if err != nil {
 		return nil, err
@@ -62,7 +67,7 @@ func (k *AccountKey) DeriveP2PKAddress(changeType ChangeType, index uint32, netw
 			ChangeIndex:  changeTypeIndex,
 			AddressIndex: index,
 		},
-		Value: a.EncodeAddress(),
+		Value: k.scriptPubKeyHash.EncodeAddress(),
 	}
 
 	return address, nil
