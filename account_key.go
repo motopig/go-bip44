@@ -10,7 +10,7 @@ type AccountKey struct {
 	extendedKey      *hdkeychain.ExtendedKey
 	startPath        HDStartPath
 	scriptPubKeyHash *btcutil.AddressPubKeyHash
-	scriptPubKeyStr  string
+	ScriptPubKeyStr  string
 }
 
 func NewAccountKeyFromXPubKey(value string) (*AccountKey, error) {

@@ -17,7 +17,7 @@ You can do so by using [this tool](https://iancoleman.io/bip39/).
 
 ## Installation
 ```bash 
-go get -u github.com/edunuzzi/go-bip44 
+go get -u github.com/motopig/go-bip44 
 ```
 
 ## Usage
@@ -85,6 +85,7 @@ xKey, _ := bip44.NewKeyFromSeedHex("your secret seed in hex format", bip44.TESTN
 accountKey, _ := xKey.BIP44AccountKey(bip44.TestnetCoinType, 1, true)
 
 externalAddress, _ := accountKey.DeriveP2PKAddress(bip44.InternalChangeType, 0, bip44.TESTNET3)
+fmt.Println(accountKey.ScriptPubKeyStr)
 ```
 
 ## TODO
