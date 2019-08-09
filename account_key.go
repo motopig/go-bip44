@@ -51,7 +51,7 @@ func (k *AccountKey) DeriveP2PKAddress(changeType ChangeType, index uint32, netw
 	}
 
 	k.scriptPubKeyHash, err = addressK.Address(netParam)
-	k.scriptPubKeyStr = hex.EncodeToString(k.scriptPubKeyHash.ScriptAddress())
+	k.ScriptPubKeyStr = hex.EncodeToString(k.scriptPubKeyHash.ScriptAddress())
 
 	if err != nil {
 		return nil, err
